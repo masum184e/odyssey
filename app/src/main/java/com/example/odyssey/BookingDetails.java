@@ -12,12 +12,36 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class BookingDetails extends AppCompatActivity implements View.OnClickListener {
 
+    private ImageView mainCarImage;
+    private LinearLayout carDetailsTabContainer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.booking_details);
 
-        // IMAGES
+        setupHeader();
+        setupMainImage();
+        setupImageSlider();
+        setupTabButtons();
+    }
+
+    private void setupHeader() {
+        TextView navbarText = findViewById(R.id.headerTitle);
+        ImageView imageView = findViewById(R.id.headerBackBtn);
+        Button bottomBtn = findViewById(R.id.bottomBtn);
+
+        navbarText.setText("Booking Details");
+        imageView.setOnClickListener(this);
+        bottomBtn.setOnClickListener(this);
+    }
+
+    private void setupMainImage() {
+        mainCarImage = findViewById(R.id.main_car_image);
+        mainCarImage.setImageResource(R.drawable.car1);
+    }
+
+    private void setupImageSlider() {
         int[] imageIds = {
                 R.drawable.car1,
                 R.drawable.car2,
@@ -26,17 +50,6 @@ public class BookingDetails extends AppCompatActivity implements View.OnClickLis
                 R.drawable.car5
         };
 
-        // TITLE
-        TextView navbarText = findViewById(R.id.headerTitle);
-        ImageView imageView = findViewById(R.id.headerBackBtn);
-        navbarText.setText("Booking Details");
-        imageView.setOnClickListener(this);
-
-        // MAIN IMAGE
-        ImageView mainCarImage = findViewById(R.id.main_car_image);
-        mainCarImage.setImageResource(imageIds[0]);
-
-        // IMAGE SLIDER
         LinearLayout imageContainer = findViewById(R.id.horizontal_images_container);
         for (int imageId : imageIds) {
             ImageView horizontalImage = new ImageView(this);
@@ -48,24 +61,17 @@ public class BookingDetails extends AppCompatActivity implements View.OnClickLis
             horizontalImage.setLayoutParams(params);
             horizontalImage.setImageResource(imageId);
 
-            horizontalImage.setId(View.generateViewId());
-            horizontalImage.setOnClickListener(new View.OnClickListener() {
-                private final int id = imageId;
-
-                @Override
-                public void onClick(View view) {
-                    mainCarImage.setImageResource(id);
-                }
-            });
+            horizontalImage.setOnClickListener(view -> mainCarImage.setImageResource(imageId));
 
             imageContainer.addView(horizontalImage);
         }
+    }
 
-        Button reviewBtn=findViewById(R.id.reviewBtn);
-        Button aboutBtn=findViewById(R.id.aboutBtn);
-        LinearLayout carDetailsTabContainer = findViewById(R.id.carDetailsTabContainer);
-        View aboutCarView = getLayoutInflater().inflate(R.layout.about_car, carDetailsTabContainer, false);
-        carDetailsTabContainer.addView(aboutCarView);
+    private void setupTabButtons() {
+        Button reviewBtn = findViewById(R.id.reviewBtn);
+        Button aboutBtn = findViewById(R.id.aboutBtn);
+        carDetailsTabContainer = findViewById(R.id.carDetailsTabContainer);
+        updateCarDetailsContent(R.layout.about_car);
         reviewBtn.setOnClickListener(this);
         aboutBtn.setOnClickListener(this);
     }
@@ -75,14 +81,17 @@ public class BookingDetails extends AppCompatActivity implements View.OnClickLis
         if (view.getId() == R.id.headerBackBtn) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+        }else if (view.getId() == R.id.bottomBtn) {
+            Intent intent = new Intent(this, UploadVehicle.class);
+            startActivity(intent);
         } else if (view.getId() == R.id.reviewBtn) {
             updateCarDetailsContent(R.layout.car_review);
         } else if (view.getId() == R.id.aboutBtn) {
             updateCarDetailsContent(R.layout.about_car);
         }
     }
+
     private void updateCarDetailsContent(int layoutId) {
-        LinearLayout carDetailsTabContainer = findViewById(R.id.carDetailsTabContainer);
         carDetailsTabContainer.removeAllViews();
         View aboutCarView = getLayoutInflater().inflate(layoutId, carDetailsTabContainer, false);
         carDetailsTabContainer.addView(aboutCarView);

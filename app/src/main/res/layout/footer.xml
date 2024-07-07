@@ -1,8 +1,15 @@
-<Button android:id="@+id/menuBtn"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/book_now_button_background"
-    android:text="Book Now"
+    android:orientation="vertical"
     android:layout_alignParentBottom="true"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    />
+    >
+
+    <Button
+        android:id="@+id/bottomBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/book_now_button_background"
+        android:text="Book Now"
+        />
+</LinearLayout>

@@ -142,6 +142,7 @@
         </LinearLayout>
 
     </ScrollView>
+
     <!-- Footer -->
     <include
         android:id="@+id/footer"
