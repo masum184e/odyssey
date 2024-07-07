@@ -3,6 +3,7 @@ package com.example.odyssey;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,10 +15,16 @@ public class UploadVehicle  extends AppCompatActivity implements  View.OnClickLi
 
         ImageView headerBackBtn=findViewById(R.id.headerBackBtn);
         headerBackBtn.setOnClickListener(this);
+
+        Button uploadSubmitButton = findViewById(R.id.uploadSubmitButton);
+        uploadSubmitButton.setOnClickListener(this);
     }
     public void onClick(View view) {
         if (view.getId() == R.id.headerBackBtn) {
             Intent intent = new Intent(this, BookingDetails.class);
+            startActivity(intent);
+        }else if (view.getId() == R.id.uploadSubmitButton) {
+            Intent intent = new Intent(this, AvailabilityCalender.class);
             startActivity(intent);
         }
     }
